@@ -1,0 +1,22 @@
+.paper {
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+}
+
+:root {
+    margin: 1em;
+}
+
+.avatar {
+    margin: 1rem;
+    background-color: #f50057;
+}
+
+.form {
+    width: 100%;
+    margin-top: 1rem;
+}
+
