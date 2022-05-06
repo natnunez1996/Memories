@@ -1,0 +1,48 @@
+.cardPostDetails {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+}
+
+.card {
+    display: flex;
+    width: 100%;
+}
+.section {
+    border-radius: 20px;
+    margin: 10px;
+    flex: 1;
+}
+
+.imageSection {
+    margin-left: 20px;
+}
+
+.recommendedPosts {
+    display: flex;
+
+}
+.loadingPaper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border-radius: 15px;
+    height: 39vh;
+}
+
+
+@media (max-width: 500px) {
+    .card {
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+
+    .imageSection {
+        margin-left: 0;
+    }
+
+    .recommendedPosts {
+        flex-direction: column;
+    }
+}
