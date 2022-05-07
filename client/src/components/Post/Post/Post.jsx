@@ -24,7 +24,6 @@ function Post({ post, setCurrentId }) {
   const user = JSON.parse(localStorage.getItem("profile"));
   const location = useLocation();
   const [likes, setLikes] = useState(post?.likes);
-  console.log(likes?.length);
 
   useEffect(() => {}, [location]);
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
@@ -11,28 +11,45 @@ const PostDetails = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { post, posts, isLoading } = useSelector((state) => state.posts);
+  const { post, posts, searchedPosts, isLoading } = useSelector(
+    (state) => state.posts
+  );
+
   const { id } = useParams();
-  const recommendedPosts = posts?.filter(({ _id }) => _id !== post?._id);
+
+  //Get Mock Data to immediately render the current post
+  const [tempPost, setTempPost] = useState(
+    posts.find((post) => post._id === id)
+  );
+  const recommendedPosts = searchedPosts?.filter(
+    ({ _id }) => _id !== tempPost?._id
+  );
+
+  console.log(id);
 
   const openPost = (_id) => {
     console.log(_id);
     navigate(`/posts/${_id}`, { replace: true });
   };
 
+  console.log(post);
+  //change global post into current post
   useEffect(() => {
-    if (id) {
-      dispatch(getPost(id));
+    async function loadData() {
+      if (id) {
+        dispatch(getPost(id));
+      }
     }
-  }, [id]);
+    loadData();
+  }, []);
 
-  useEffect(() => {
-    if (post) {
-      dispatch(
-        getPostsBySearch({ search: "none", tags: post?.tags.join(",") })
-      );
-    }
-  }, [post]);
+  // useEffect(() => {
+  //   if (tempPost) {
+  //     dispatch(
+  //       getPostsBySearch({ search: "none", tags: tempPost?.tags.join(",") })
+  //     );
+  //   }
+  // }, [tempPost]);
 
   // if (!post) return null;
 
@@ -49,7 +66,7 @@ const PostDetails = () => {
       <div className="cardPostDetails">
         <div className="section">
           <Typography variant="h3" component="h2">
-            {post?.title}
+            {tempPost?.title}
           </Typography>
           <Typography
             gutterBottom
@@ -57,14 +74,14 @@ const PostDetails = () => {
             color="textSecondary"
             component="h2"
           >
-            {post?.tags.map((tag) => `#${tag} `)}
+            {tempPost?.tags.map((tag) => `#${tag} `)}
           </Typography>
           <Typography gutterBottom variant="body1" component="p">
-            {post?.message}
+            {tempPost?.message}
           </Typography>
-          <Typography variant="h6">Created by: {post?.name}</Typography>
+          <Typography variant="h6">Created by: {tempPost?.name}</Typography>
           <Typography variant="body1">
-            {moment(post?.createdAt).fromNow()}
+            {moment(tempPost?.createdAt).fromNow()}
           </Typography>
           <Divider style={{ margin: "20px 0" }} />
           <Typography variant="body1">
@@ -72,20 +89,20 @@ const PostDetails = () => {
           </Typography>
           <Divider style={{ margin: "20px 0" }} />
           <Typography variant="body1">
-            <CommentSection post={post} />
+            <CommentSection post={tempPost} />
           </Typography>
           <Divider style={{ margin: "20px 0" }} />
         </div>
         <div className="imageSection">
           <img
-            src={post?.selectedFile}
+            src={tempPost?.selectedFile}
             style={{
               borderRadius: "20px",
               objectFit: "cover",
               width: "100%",
               maxHeight: "600px",
             }}
-            alt={post?.title}
+            alt={tempPost?.title}
           />
         </div>
       </div>

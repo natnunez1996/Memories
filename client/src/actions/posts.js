@@ -17,11 +17,11 @@ export const getPosts = (page) => async (dispatch) => {
 
 export const getPost = (id) => async (dispatch) => {
     try {
-        dispatch({ type: actionType.START_LOADING })
+        // dispatch({ type: actionType.START_LOADING })
         const { data } = await api.fetchPost(id)
 
         dispatch({ type: actionType.FETCH_POST, payload: data })
-        dispatch({ type: actionType.END_LOADING })
+        // dispatch({ type: actionType.END_LOADING })
     } catch (error) {
         console.log(error.message)
     }
@@ -58,11 +58,9 @@ export const createPost = (post, navigate) => async (dispatch) => {
 export const deletePost = (id) => async (dispatch) => {
 
     try {
-        dispatch({ type: actionType.START_LOADING })
         await api.deletePost(id)
 
         dispatch({ type: actionType.DELETE, payload: id })
-        dispatch({ type: actionType.END_LOADING })
     } catch (error) {
         console.log(error)
     }

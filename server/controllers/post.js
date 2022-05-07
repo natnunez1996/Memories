@@ -12,7 +12,6 @@ export const getPost = async (req, res) => {
         res.status(200).json(post)
 
     } catch (error) {
-        console.error(error)
         res.status(404).json({ message: error })
     }
 }
@@ -22,13 +21,17 @@ export const getPosts = async (req, res) => {
     const { page } = req.query
 
     try {
-        const LIMIT = 2;
-        const startIndex = (Number(page - 1) * LIMIT) // get the starting Index of every page
-        const total = await PostMessage.countDocuments({})
+        // const LIMIT = 2;
+        // const startIndex = (Number(page - 1) * LIMIT) // get the starting Index of every page
+        // const total = await PostMessage.countDocuments({})
 
-        const posts = await PostMessage.find().sort({ _id: -1 }).limit(LIMIT).skip(startIndex).lean()
+        // const posts = await PostMessage.find().sort({ _id: -1 }).limit(LIMIT).skip(startIndex).lean()
 
-        res.status(200).json({ data: posts, currentPage: Number(page), numberOfPage: Math.ceil(total / LIMIT) });
+        // res.status(200).json({ data: posts, currentPage: Number(page), numberOfPage: Math.ceil(total / LIMIT) });
+
+        const posts = await PostMessage.find()
+
+        res.status(200).json({ data: posts })
     } catch (error) {
         res.status(404).json({ message: error.message })
     }
@@ -42,7 +45,7 @@ export const getPostsBySearch = async (req, res) => {
     try {
         const title = new RegExp(searchQuery, 'i') //exclude caseSensitivity
         const posts = await PostMessage.find({ $or: [{ title }, { tags: { $in: tags.split(',') } }] }) //$or OR, $in find any tags value
-        console.log(posts)
+
         res.status(200).json({ data: posts })
     }
     catch (error) {
@@ -119,7 +122,6 @@ export const commentPost = async (req, res) => {
     const { value } = req.body
 
     const post = await PostMessage.findById(id)
-    console.log(id)
 
     post.comments.push(value)
 

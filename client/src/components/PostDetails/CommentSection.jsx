@@ -11,14 +11,18 @@ const CommentSection = ({ post }) => {
   const user = JSON.parse(localStorage.getItem("profile"));
   const commentsRef = useRef();
 
-  const handleCLick = async () => {
+  const handleCLick = () => {
     const finalComment = `${user?.result.name}: ${comment}`;
-    const newComments = await dispatch(commentPost(finalComment, post._id));
 
-    setComments(newComments);
+    setComments((prevComments) => [...prevComments, finalComment]);
     setComment("");
-
+    sendComment(finalComment);
     commentsRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+  console.log(post?.comments);
+
+  const sendComment = (finalComment) => {
+    dispatch(commentPost(finalComment, post._id));
   };
 
   return (

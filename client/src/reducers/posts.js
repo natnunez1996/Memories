@@ -6,16 +6,21 @@ const postsReducer = (state = { isLoading: true, posts: [] }, action) => {
             return { ...state, isLoading: true }
         case actionType.END_LOADING:
             return { ...state, isLoading: false }
+
         case actionType.FETCH_ALL:
-            return {
-                ...state, posts: action.payload.data,
-                currentPage: action.payload.currentPage,
-                numberOfPages: action.payload.numberOfPage
-            };
+            return { ...state, posts: action.payload.data }
+        // case actionType.FETCH_ALL:
+        //     return {
+        //         ...state, posts: action.payload.data,
+        //         currentPage: action.payload.currentPage,
+        //         numberOfPages: action.payload.numberOfPage
+        //     };
         case actionType.FETCH_POST:
             return { ...state, post: action.payload }
+        // case actionType.FETCH_BY_SEARCH:
+        //     return { ...state, posts: action.payload }
         case actionType.FETCH_BY_SEARCH:
-            return { ...state, posts: action.payload }
+            return { ...state, searchedPosts: action.payload }
         case actionType.CREATE:
             return { ...state, posts: [...state.posts, action.payload] };
         case actionType.DELETE:

@@ -9,11 +9,11 @@ import {
   Paper,
   TextField,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Form from "../Forms/Form";
 import Posts from "../Post/Posts";
 import { useDispatch } from "react-redux";
-import { getPosts, getPostsBySearch } from "../../actions/posts";
+import { getPostsBySearch } from "../../actions/posts";
 import Pagination from "../Pagination";
 import "./home.css";
 import { useLocation, useNavigate } from "react-router-dom";
