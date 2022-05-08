@@ -1,23 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Container } from "@mui/material";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Auth from "./components/Auth/Auth";
 import PostDetails from "./components/PostDetails/PostDetails";
-import { useDispatch } from "react-redux";
-import { getPosts } from "./actions/posts";
 
 function App() {
   const user = JSON.parse(localStorage.getItem("profile"));
-
-  const dispatch = useDispatch();
-
-  //CALL POSTS AT FIRST
-  useEffect(() => {
-    console.log("GETTING ALL POSTS");
-    dispatch(getPosts(1));
-  }, []);
 
   console.log(user);
   return (

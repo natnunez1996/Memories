@@ -21,17 +21,13 @@ export const getPosts = async (req, res) => {
     const { page } = req.query
 
     try {
-        // const LIMIT = 2;
-        // const startIndex = (Number(page - 1) * LIMIT) // get the starting Index of every page
-        // const total = await PostMessage.countDocuments({})
+        const LIMIT = 3;
+        const startIndex = (Number(page - 1) * LIMIT) // get the starting Index of every page
+        const total = await PostMessage.countDocuments({})
 
-        // const posts = await PostMessage.find().sort({ _id: -1 }).limit(LIMIT).skip(startIndex).lean()
+        const posts = await PostMessage.find().sort({ _id: -1 }).limit(LIMIT).skip(startIndex)
 
-        // res.status(200).json({ data: posts, currentPage: Number(page), numberOfPage: Math.ceil(total / LIMIT) });
-
-        const posts = await PostMessage.find().sort({ createdAt: -1 })
-
-        res.status(200).json({ data: posts })
+        res.status(200).json({ data: posts, currentPage: Number(page), numberOfPage: Math.ceil(total / LIMIT) });
     } catch (error) {
         res.status(404).json({ message: error.message })
     }

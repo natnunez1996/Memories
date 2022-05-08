@@ -4,7 +4,6 @@ import * as actionType from '../constants/actionTypes'
 //Action creators 
 
 export const getPosts = (page) => async (dispatch) => {
-    console.log("ACTIONS GETTING POSTS")
     try {
         dispatch({ type: actionType.START_LOADING })
         const { data } = await api.fetchPosts(page)
@@ -18,11 +17,9 @@ export const getPosts = (page) => async (dispatch) => {
 
 export const getPost = (id) => async (dispatch) => {
     try {
-        // dispatch({ type: actionType.START_LOADING })
         const { data } = await api.fetchPost(id)
 
         dispatch({ type: actionType.FETCH_POST, payload: data })
-        // dispatch({ type: actionType.END_LOADING })
     } catch (error) {
         console.log(error.message)
     }
@@ -32,7 +29,6 @@ export const getPostsBySearch = (searchQuery) => async (dispatch) => {
     try {
         dispatch({ type: actionType.START_LOADING })
         const { data: { data } } = await api.fetchPostsBySearch(searchQuery)
-        console.log(data)
 
         dispatch({ type: actionType.FETCH_BY_SEARCH, payload: data })
         dispatch({ type: actionType.END_LOADING })
@@ -47,8 +43,9 @@ export const createPost = (post, navigate) => async (dispatch) => {
 
         const { data } = await api.createPost(post);
 
-        navigate(`/posts/${data._id}`, { replace: true })
         dispatch({ type: actionType.CREATE, payload: data })
+        getPosts()
+        navigate(`/posts/${data._id}`, { replace: true })
         dispatch({ type: actionType.END_LOADING })
 
     } catch (error) {
