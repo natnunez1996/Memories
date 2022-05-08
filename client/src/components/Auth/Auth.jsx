@@ -3,18 +3,22 @@ import {
   Avatar,
   Button,
   Container,
+  FormControl,
+  FormHelperText,
   Grid,
+  InputLabel,
   Paper,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./auth.css";
 import Icon from "./icon";
 import Input from "./Input";
 import GoogleLogIn from "react-google-login";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { signin, signup } from "../../actions/auth";
+import { CLEAR_MESSAGE } from "../../constants/actionTypes";
 
 const initialState = {
   firstName: "",
@@ -31,6 +35,14 @@ const Auth = () => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState(initialState);
+  const { message } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    return () => {
+      console.log("REMOVING MESSAGE");
+      dispatch({ type: CLEAR_MESSAGE });
+    };
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -100,6 +112,14 @@ const Auth = () => {
               type="email"
               autoFocus={!isSignUp}
             />
+            {message && (
+              <FormHelperText
+                style={{ marginLeft: "1rem", fontSize: "1.125rem" }}
+                error
+              >
+                {message}
+              </FormHelperText>
+            )}
             <Input
               name="password"
               label="Password"

@@ -29,7 +29,7 @@ export const getPosts = async (req, res) => {
 
         // res.status(200).json({ data: posts, currentPage: Number(page), numberOfPage: Math.ceil(total / LIMIT) });
 
-        const posts = await PostMessage.find()
+        const posts = await PostMessage.find().sort({ createdAt: -1 })
 
         res.status(200).json({ data: posts })
     } catch (error) {

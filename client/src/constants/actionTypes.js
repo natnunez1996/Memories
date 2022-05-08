@@ -13,3 +13,5 @@ export const END_LOADING = 'END_LOADING'
 
 export const AUTH = 'AUTH'
 export const LOGOUT = 'LOGOUT'
+export const INVALID_CREDENTIALS = 'INVALID_CREDENTIALS'
+export const CLEAR_MESSAGE = 'CLEAR_MESSAGE'

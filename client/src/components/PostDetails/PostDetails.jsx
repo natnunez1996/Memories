@@ -11,28 +11,23 @@ const PostDetails = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { post, posts, searchedPosts, isLoading } = useSelector(
+  const { posts, searchedPosts, isLoading } = useSelector(
     (state) => state.posts
   );
 
   const { id } = useParams();
 
   //Get Mock Data to immediately render the current post
-  const [tempPost, setTempPost] = useState(
-    posts.find((post) => post._id === id)
-  );
+  const [tempPost] = useState(posts.find((post) => post._id === id));
   const recommendedPosts = searchedPosts?.filter(
     ({ _id }) => _id !== tempPost?._id
   );
-
-  console.log(id);
 
   const openPost = (_id) => {
     console.log(_id);
     navigate(`/posts/${_id}`, { replace: true });
   };
 
-  console.log(post);
   //change global post into current post
   useEffect(() => {
     async function loadData() {

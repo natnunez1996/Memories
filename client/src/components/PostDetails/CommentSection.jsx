@@ -19,7 +19,6 @@ const CommentSection = ({ post }) => {
     sendComment(finalComment);
     commentsRef.current.scrollIntoView({ behavior: "smooth" });
   };
-  console.log(post?.comments);
 
   const sendComment = (finalComment) => {
     dispatch(commentPost(finalComment, post._id));

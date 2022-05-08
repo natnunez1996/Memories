@@ -4,6 +4,7 @@ import * as actionType from '../constants/actionTypes'
 //Action creators 
 
 export const getPosts = (page) => async (dispatch) => {
+    console.log("ACTIONS GETTING POSTS")
     try {
         dispatch({ type: actionType.START_LOADING })
         const { data } = await api.fetchPosts(page)
